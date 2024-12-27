@@ -15,7 +15,7 @@ http.createServer(function(request,response){
     
     const playerAction = query.action;
 
-    if (playerWon >= 3) {
+    if (won >= 3) {
       response.writeHead(500);
       response.end('GG');
       return
@@ -30,6 +30,7 @@ http.createServer(function(request,response){
 
   else if(game == 1){
     response.end('win');
+    won++;
   }
 
   else if(game == -1){
