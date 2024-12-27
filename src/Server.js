@@ -10,7 +10,7 @@ let won = 0;
 http.createServer(function(request,response){
   const par = url.parse(request.url);
 
-  if (parsedUrl.pathname == '/game') {
+  if (par.pathname == '/game') {
     const query = querystring.parse(parsedUrl.query);
     
     const playerAction = query.action;
