@@ -27,6 +27,7 @@
       width: 400px;
       margin: 20px;
       padding: 10px;
+      overflow-y: auto;
     }
   </style>
 </head>
@@ -41,18 +42,26 @@
     rock: document.getElementById('rock'),
     scissor: document.getElementById('scissor'),
     paper: document.getElementById('paper')
-  }
-  
-  const $output = document.getElementById('output')
+  };
+
+  const $output = document.getElementById('output');
 
   Object.keys($button).forEach(key => {
     $button[key].addEventListener('click', function () {
-      fetch(`http://${location.host}/game?action=${key}`).then((res) => {
-        return res.text()
-      }).then((text) => {
-        $output.innerHTML += text + '<br/>';
-      })
-    })
-  })
+      fetch(`http://${location.host}/game?action=${key}`)
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error('Server Error: ' + res.statusText);
+          }
+          return res.text();
+        })
+        .then((text) => {
+          $output.innerHTML += text + '<br/>';
+        })
+        .catch((err) => {
+          $output.innerHTML += `<span style="color: red;">Error: ${err.message}</span><br/>`;
+        });
+    });
+  });
 </script>
 </html>
